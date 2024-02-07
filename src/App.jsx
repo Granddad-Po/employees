@@ -22,11 +22,22 @@ class App extends Component {
     }
 
     deleteItem = (id) => {
-        this.setState(({data}) => {
-            return {
-                data: data.filter(item => item.id !== id)
-            }
-        })
+        this.setState(({data}) => ({
+            data: data.filter(item => item.id !== id)
+        }))
+    }
+
+    addItem = (name, salary) => {
+        const newEmployees = {
+            id: new Date().getTime(),
+            name: name,
+            salary: salary,
+            premium: false,
+            favourite: false
+        }
+        this.setState(({data}) => ({
+            data: [...data, newEmployees]
+        }))
     }
 
     render() {
@@ -38,7 +49,7 @@ class App extends Component {
                     <AppFilter/>
                 </div>
                 <EmployeesList data={this.state.data} onDelete={this.deleteItem}/>
-                <EmployeesAddForm/>
+                <EmployeesAddForm onAdd={this.addItem}/>
             </>
         )
     }

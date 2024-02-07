@@ -2,18 +2,28 @@ import './employees-add-form.css'
 import { Component } from "react";
 
 class EmployeesAddForm extends Component {
-    constructor( props ) {
-        super( props );
+    constructor(props) {
+        super(props);
         this.state = {
             name: '',
             salary: ''
         }
     }
 
-    onValueChange = ( e ) => {
-        this.setState( {
+    onValueChange = (e) => {
+        this.setState({
             [e.target.name]: e.target.value
-        } )
+        })
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault()
+        this.props.onAdd(this.state.name, this.state.salary)
+        this.setState({
+            name: '',
+            salary: ''
+        })
+
     }
 
     render() {
@@ -22,7 +32,7 @@ class EmployeesAddForm extends Component {
         return (
             <div className="app-add-form">
                 <h3>Добавьте нового сотрудника</h3>
-                <form className="add-form d-flex">
+                <form className="add-form d-flex" onSubmit={this.onSubmit}>
                     <input
                         type="text"
                         onChange={this.onValueChange}
