@@ -2,12 +2,23 @@ import EmployeesListItem from "../emloyees-list-item/employees-list-item.jsx";
 
 import './employees-list.css'
 
-const EmployeesList = () => {
+const EmployeesList = ({data, onDelete}) => {
+
+    const elements = data.map(item => {
+        const {id, ...itemProps} = item
+
+        return (
+            <EmployeesListItem
+                key={id}
+                {...itemProps}
+                onDelete={() => onDelete(id)}
+            />
+        )
+    })
+
     return (
         <ul className="app-list list-group">
-            <EmployeesListItem/>
-            <EmployeesListItem/>
-            <EmployeesListItem/>
+            {elements}
         </ul>
     );
 };

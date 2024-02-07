@@ -1,29 +1,68 @@
+import { Component } from "react";
+
 import './employees-list-item.css'
 
-const EmployeesListItem = () => {
-    return (
-        <li className="list-group-item d-flex justify-content-between">
-            <span className="list-group-item-label">John Snow</span>
-            <input type="text" className="list-group-item-input" defaultValue="1000$"/>
-            <div className="d-flex justify-content-center align-items-center">
-                <button type="button"
-                        className="btn-cookie btn-sm ">
-                    <i className="fas fa-cookie"></i>
-                </button>
+class EmployeesListItem extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            increase: false,
+            favourite: false
+        }
+    }
 
-                <button type="button"
-                        className="btn-trash btn-sm ">
-                    <i className="fas fa-trash"></i>
-                </button>
+    onIncrease = () => {
+        this.setState(({increase}) => ({
+            increase: !increase
+        }))
+    }
 
-                <button type="button"
-                        className="btn-trash btn-sm ">
-                    <i className="fa-solid fa-star"></i>
-                </button>
+    onFavourite = () => {
+        this.setState(({favourite}) => ({
+            favourite: !favourite
+        }))
+    }
 
-            </div>
-        </li>
-    );
-};
+    render() {
+        const {name, salary, onDelete} = this.props
+        const {increase, favourite} = this.state
+
+        let classNames = "list-group-item d-flex justify-content-between";
+        if (increase) {
+            classNames += ' increase'
+        }
+        if (favourite) {
+            classNames += ' like'
+        }
+
+        return (
+            <li className={classNames}>
+                <span onClick={this.onFavourite} className="list-group-item-label">{name}</span>
+                <input type="text" className="list-group-item-input" defaultValue={salary + '$'}/>
+                <div className="d-flex justify-content-center align-items-center">
+                    <button onClick={this.onIncrease}
+                        type="button"
+                            className="btn-cookie btn-sm">
+                        <i className="fas fa-cookie"></i>
+                    </button>
+
+                    <button type="button"
+                            className="btn-trash btn-sm"
+                            onClick={onDelete}
+                    >
+                        <i className="fas fa-trash"></i>
+                    </button>
+
+                    <button type="button"
+                            className="btn-trash btn-sm">
+                        <i className="fa-solid fa-star"></i>
+                    </button>
+
+                </div>
+            </li>
+        );
+    };
+}
+
 
 export default EmployeesListItem;
